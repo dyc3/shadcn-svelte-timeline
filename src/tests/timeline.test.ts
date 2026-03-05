@@ -67,6 +67,29 @@ describe('Basic vertical timeline', () => {
 		await expect.element(page.getByText('Item 1')).toBeInTheDocument();
 		expect(cs('.timeline-content-cell', 'padding-inline-start')).toBe('16px');
 	});
+
+	test('connector spans full ind-cell height (absolute positioning)', async () => {
+		render(BasicVertical);
+
+		await expect.element(page.getByText('Item 1')).toBeInTheDocument();
+		// Check first (non-last) connector matches its parent ind-cell height
+		const indCell = document.querySelector('.timeline-ind-cell') as HTMLElement;
+		const connector = indCell.querySelector('.connector') as HTMLElement;
+		const cellHeight = indCell.getBoundingClientRect().height;
+		const connectorHeight = connector.getBoundingClientRect().height;
+		expect(connectorHeight).toBeCloseTo(cellHeight, 0);
+	});
+
+	test('ind-cell is left of content-cell', async () => {
+		render(BasicVertical);
+
+		await expect.element(page.getByText('Item 1')).toBeInTheDocument();
+		const indCell = document.querySelector('.timeline-ind-cell') as HTMLElement;
+		const contentCell = document.querySelector('.timeline-content-cell') as HTMLElement;
+		expect(indCell.getBoundingClientRect().left).toBeLessThan(
+			contentCell.getBoundingClientRect().left
+		);
+	});
 });
 
 // ---------------------------------------------------------------------------
@@ -325,3 +348,4 @@ describe('Alignment', () => {
 		expect(cellH - offset - dotH).toBeLessThanOrEqual(2);
 	});
 });
+
