@@ -1,0 +1,44 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry.json",
+	"name": "svelte-timeline",
+	"homepage": "https://github.com/example/svelte-timeline",
+	"items": [
+		{
+			"name": "timeline",
+			"type": "registry:ui",
+			"title": "Timeline",
+			"description": "A flexible timeline component with vertical/horizontal layouts, status indicators, and CSS grid alignment.",
+			"registryDependencies": ["utils"],
+			"files": [
+				{
+					"path": "registry/timeline/timeline.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "registry/timeline/timeline-item.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "registry/timeline/timeline-indicator.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "registry/timeline/timeline-content.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "registry/timeline/timeline-block.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "registry/timeline/timeline-subgrid.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "registry/timeline/index.ts",
+					"type": "registry:ui"
+				}
+			]
+		}
+	]
+}
