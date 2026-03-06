@@ -61,58 +61,55 @@
 					: 'size-2.5'
 	);
 
-	// Vertical alignment: margin classes on the dot to position it within the
-	// flex-col ind-cell. The connector is absolutely positioned full-height so
-	// it doesn't interfere with the flex layout.
-	const dotAlignClass = $derived((): string => {
+	// Vertical alignment: align-self on the dot inside the ind-cell grid.
+	// The ind-cell is a grid that stretches to the full row height (set by col 2).
+	// The dot is the only grid item; align-self positions it within that height.
+	const dotAlignSelf = $derived((): string => {
 		if (timelineCtx?.horizontal) return '';
 		const a = itemCtx?.align ?? timelineCtx?.align ?? 'baseline';
-		if (a === 'end') return 'mt-auto';
-		if (a === 'center') return 'my-auto';
-		// 'start' and 'baseline' both sit at the top naturally
-		return '';
+		if (a === 'end') return 'self-end';
+		if (a === 'center') return 'self-center';
+		return 'self-start'; // 'start' and 'baseline'
 	});
 </script>
 
 <!--
-	Vertical: the ind-cell is position:relative and always stretches to fill
-	the full grid row height (align-self:stretch). The connector is absolutely
-	positioned top-0/bottom-0 so it spans the entire row. The dot uses
-	align-self (self-start/center/end) to float within the stretched cell.
+	Vertical: the ind-cell is a single-column grid (display:grid) that stretches
+	to the full row height because grid items default to align-self:stretch.
+	The dot is placed with align-self (self-start/center/end) for alignment.
+	The connector is absolutely positioned top-0/bottom-0 behind the dot,
+	spanning the full cell height (= the full grid row height).
 
-	Horizontal: the ind-cell is position:relative with the dot centered and
-	the connector absolutely positioned behind it.
+	Horizontal: position:relative flex, dot centered, connector absolute.
 -->
 <div
 	class={cn(
-		'timeline-ind-cell',
+		'timeline-ind-cell relative',
 		timelineCtx?.horizontal
-			? 'relative flex items-center justify-center'
-			: 'relative flex flex-col items-center h-full',
+			? 'flex items-center justify-center'
+			: 'grid justify-items-center',
 		className
 	)}
 	{...rest}
 >
+	<!-- Connector line (rendered first so dot sits on top via z-index) -->
+	{#if timelineCtx?.horizontal}
+		<div class="connector absolute top-1/2 left-1/2 right-[-50%] h-px -translate-y-1/2 bg-border"></div>
+	{:else}
+		<div class="connector absolute top-0 bottom-0 left-1/2 w-px -translate-x-1/2 bg-border"></div>
+	{/if}
+
 	<!-- The indicator dot/icon -->
 	<div
 		class={cn(
 			'relative z-10 flex shrink-0 items-center justify-center rounded-full',
 			sizeClass,
 			dotClass,
-			!timelineCtx?.horizontal && dotAlignClass()
+			!timelineCtx?.horizontal && dotAlignSelf()
 		)}
 	>
 		{#if children}
 			{@render children()}
 		{/if}
 	</div>
-
-	<!-- Connector line: hidden on last item via CSS selector in parent -->
-	{#if timelineCtx?.horizontal}
-		<!-- Runs from this dot's center to the next dot's center. -->
-		<div class="connector absolute top-1/2 left-1/2 right-[-50%] h-px -translate-y-1/2 bg-border"></div>
-	{:else}
-		<!-- Absolutely positioned so it spans the full cell height, behind the dot -->
-		<div class="connector absolute top-0 bottom-0 left-1/2 w-px -translate-x-1/2 bg-border"></div>
-	{/if}
 </div>

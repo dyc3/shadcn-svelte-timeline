@@ -286,23 +286,23 @@
 						<p class="text-sm font-medium">curtisss <span class="font-normal text-muted-foreground">requested a review · 4 days ago</span></p>
 					</TimelineContent>
 				</TimelineItem>
-				<TimelineItem>
-					<TimelineBlock class="rounded-xl border bg-card">
-						<div class="col-span-full p-4">
-							<div class="flex items-start gap-3">
-								<div class="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold">JR</div>
-								<div class="space-y-1">
-									<p class="text-sm font-medium">james_rob <span class="font-normal text-muted-foreground">replied to your message · 4 days ago</span></p>
-									<p class="text-sm text-muted-foreground">Looks good to me! Just a few minor nits to address.</p>
-								</div>
-							</div>
-							<div class="mt-3 flex gap-2">
-								<button class="rounded-md border px-3 py-1.5 text-xs font-medium hover:bg-accent">View message</button>
-								<button class="rounded-md px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground">Reply</button>
+			<TimelineItem>
+				<TimelineBlock>
+					<div class="col-span-full rounded-xl border bg-card p-4">
+						<div class="flex items-start gap-3">
+							<div class="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold">JR</div>
+							<div class="space-y-1">
+								<p class="text-sm font-medium">james_rob <span class="font-normal text-muted-foreground">replied to your message · 4 days ago</span></p>
+								<p class="text-sm text-muted-foreground">Looks good to me! Just a few minor nits to address.</p>
 							</div>
 						</div>
-					</TimelineBlock>
-				</TimelineItem>
+						<div class="mt-3 flex gap-2">
+							<button class="rounded-md border px-3 py-1.5 text-xs font-medium hover:bg-accent">View message</button>
+							<button class="rounded-md px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground">Reply</button>
+						</div>
+					</div>
+				</TimelineBlock>
+			</TimelineItem>
 				<TimelineItem>
 					<TimelineIndicator>
 						<svg class="size-3 text-background" viewBox="0 0 16 16" fill="currentColor">
@@ -345,30 +345,30 @@
 						<p class="text-sm font-medium">curtisss <span class="font-normal text-muted-foreground">requested a review · 4 days ago</span></p>
 					</TimelineContent>
 				</TimelineItem>
-				<TimelineItem>
-					<TimelineBlock class="overflow-hidden rounded-xl border bg-card">
-						<!-- First subgrid row: comment -->
-						<TimelineSubgrid class="bg-muted/30 p-3">
-							<div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-[10px] font-semibold">JR</div>
-							<div class="space-y-1">
-								<p class="text-sm font-medium">james_rob <span class="font-normal text-muted-foreground">commented · 4 days ago</span></p>
-								<p class="text-sm text-muted-foreground">Contrast slider goes a bit wild at the top end...</p>
-							</div>
-						</TimelineSubgrid>
-						<div class="border-t"></div>
-						<!-- Second subgrid row: reply input -->
-						<TimelineSubgrid class="bg-background p-3">
-							<div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">ME</div>
-							<div>
-								<input
-									type="text"
-									placeholder="Leave a reply..."
-									class="w-full rounded-md border bg-background px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-ring"
-								/>
-							</div>
-						</TimelineSubgrid>
-					</TimelineBlock>
-				</TimelineItem>
+			<TimelineItem>
+				<TimelineBlock class="overflow-hidden rounded-xl border bg-card">
+					<!-- First subgrid row: comment -->
+					<TimelineSubgrid class="bg-muted/30 p-3">
+						<div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-[10px] font-semibold">JR</div>
+						<div class="space-y-1">
+							<p class="text-sm font-medium">james_rob <span class="font-normal text-muted-foreground">commented · 4 days ago</span></p>
+							<p class="text-sm text-muted-foreground">Contrast slider goes a bit wild at the top end...</p>
+						</div>
+					</TimelineSubgrid>
+					<div class="border-t col-span-full"></div>
+					<!-- Second subgrid row: reply input -->
+					<TimelineSubgrid class="bg-background p-3">
+						<div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">ME</div>
+						<div>
+							<input
+								type="text"
+								placeholder="Leave a reply..."
+								class="w-full rounded-md border bg-background px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-ring"
+							/>
+						</div>
+					</TimelineSubgrid>
+				</TimelineBlock>
+			</TimelineItem>
 				<TimelineItem>
 					<TimelineIndicator color="green">
 						<svg class="size-3 text-white" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">

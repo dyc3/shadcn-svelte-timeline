@@ -1,14 +1,14 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
-	import { cn } from '$lib/utils';
+    import type { Snippet } from "svelte";
+    import { cn } from "$lib/utils";
 
-	interface Props {
-		children?: Snippet;
-		class?: string;
-		[key: string]: unknown;
-	}
+    interface Props {
+        children?: Snippet;
+        class?: string;
+        [key: string]: unknown;
+    }
 
-	let { children, class: className, ...rest }: Props = $props();
+    let { children, class: className, ...rest }: Props = $props();
 </script>
 
 <!--
@@ -19,12 +19,12 @@
 	with the content column — perfect for comment threads or nested items.
 -->
 <div
-	class={cn(
-		'timeline-subgrid col-span-full grid items-start',
-		'[grid-template-columns:subgrid]',
-		className
-	)}
-	{...rest}
+    class={cn(
+        "timeline-subgrid col-span-full grid items-start gap-3",
+        "[grid-template-columns:subgrid]",
+        className,
+    )}
+    {...rest}
 >
-	{@render children?.()}
+    {@render children?.()}
 </div>

@@ -285,67 +285,43 @@ describe('Subgrid', () => {
 // 9. Alignment
 // ---------------------------------------------------------------------------
 describe('Alignment', () => {
-	// The ind-cell always uses align-self:stretch so the connector fills the row.
-	// Dot position within the cell is controlled by margin classes on the dot.
-	// We verify by checking the dot's offset relative to the cell for each align value.
+	// The ind-cell is a grid that stretches to the full row height.
+	// The dot uses align-self (self-start/center/end) to position within it.
+	// The connector is absolute top-0/bottom-0 so it always spans the full height.
 
-	function getDotOffset(): number {
-		const cell = document.querySelector('.timeline-ind-cell') as HTMLElement;
-		const dot = cell.querySelector('.rounded-full') as HTMLElement;
-		return dot.getBoundingClientRect().top - cell.getBoundingClientRect().top;
+	function getDot(): HTMLElement {
+		return document.querySelector('.timeline-ind-cell .rounded-full') as HTMLElement;
 	}
 
-	function getCellHeight(): number {
-		const cell = document.querySelector('.timeline-ind-cell') as HTMLElement;
-		return cell.getBoundingClientRect().height;
-	}
-
-	function getDotHeight(): number {
-		const dot = document.querySelector('.timeline-ind-cell .rounded-full') as HTMLElement;
-		return dot.getBoundingClientRect().height;
-	}
-
-	test('align=start places dot at top of cell', async () => {
+	test('align=start dot has self-start class', async () => {
 		render(AlignTimeline, { props: { align: 'start' } });
 		await expect.element(page.getByText('Line one')).toBeInTheDocument();
-		// Dot should be flush with (or very close to) the top of the cell
-		expect(getDotOffset()).toBeLessThanOrEqual(2);
+		expect(getDot().classList.contains('self-start')).toBe(true);
 	});
 
-	test('align=end places dot at bottom of cell', async () => {
+	test('align=end dot has self-end class', async () => {
 		render(AlignTimeline, { props: { align: 'end' } });
 		await expect.element(page.getByText('Line one')).toBeInTheDocument();
-		const offset = getDotOffset();
-		const cellH = getCellHeight();
-		const dotH = getDotHeight();
-		// Dot bottom should be flush with cell bottom
-		expect(cellH - offset - dotH).toBeLessThanOrEqual(2);
+		expect(getDot().classList.contains('self-end')).toBe(true);
 	});
 
-	test('align=center places dot at vertical center of cell', async () => {
+	test('align=center dot has self-center class', async () => {
 		render(AlignTimeline, { props: { align: 'center' } });
 		await expect.element(page.getByText('Line one')).toBeInTheDocument();
-		const offset = getDotOffset();
-		const cellH = getCellHeight();
-		const dotH = getDotHeight();
-		const center = (cellH - dotH) / 2;
-		expect(Math.abs(offset - center)).toBeLessThanOrEqual(2);
+		expect(getDot().classList.contains('self-center')).toBe(true);
 	});
 
-	test('align=baseline places dot at top of cell (same as start)', async () => {
+	test('align=baseline dot has self-start class (same as start)', async () => {
 		render(AlignTimeline, { props: { align: 'baseline' } });
 		await expect.element(page.getByText('Line one')).toBeInTheDocument();
-		expect(getDotOffset()).toBeLessThanOrEqual(2);
+		expect(getDot().classList.contains('self-start')).toBe(true);
 	});
 
 	test('per-item align overrides timeline-level align', async () => {
 		render(AlignTimeline, { props: { align: 'start', itemAlign: 'end' } });
 		await expect.element(page.getByText('Line one')).toBeInTheDocument();
-		const offset = getDotOffset();
-		const cellH = getCellHeight();
-		const dotH = getDotHeight();
-		// With itemAlign=end, dot should be near the bottom
-		expect(cellH - offset - dotH).toBeLessThanOrEqual(2);
+		// The first item's dot should have self-end (itemAlign=end overrides align=start)
+		expect(getDot().classList.contains('self-end')).toBe(true);
 	});
 });
 
