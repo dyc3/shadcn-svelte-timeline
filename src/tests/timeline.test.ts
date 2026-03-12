@@ -12,9 +12,42 @@ import BlockTimeline from './fixtures/BlockTimeline.svelte';
 import SubgridTimeline from './fixtures/SubgridTimeline.svelte';
 import AlignTimeline from './fixtures/AlignTimeline.svelte';
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
+/**
+ * Returns every Tailwind padding or margin utility class found in the class
+ * list of the given element. Matches the full set of directional shorthands:
+ *   p / px / py / ps / pe / pt / pr / pb / pl
+ *   m / mx / my / ms / me / mt / mr / mb / ml
+ * followed by a dash and any value (e.g. p-4, mb-0, ps-1.5, mx-auto).
+ */
+function findPaddingMarginClasses(el: Element): string[] {
+	return [...el.classList].filter((cls) => /^[pm](?:[xysetblr])?-/.test(cls));
+}
+
+/**
+ * Collect all timeline component elements from the current document and
+ * return any padding/margin Tailwind classes found on them, as a flat array
+ * of `"<selector> → <class>"` strings for readable assertion output.
+ */
+function auditTimelineNodes(): string[] {
+	const selectors = [
+		'.timeline',
+		'.timeline-item',
+		'.timeline-ind-cell',
+		'.timeline-content-cell',
+		'.timeline-block',
+		'.timeline-subgrid'
+	];
+
+	const violations: string[] = [];
+	for (const sel of selectors) {
+		for (const el of document.querySelectorAll(sel)) {
+			for (const cls of findPaddingMarginClasses(el)) {
+				violations.push(`${sel} → ${cls}`);
+			}
+		}
+	}
+	return violations;
+}
 
 /** Get computed style property from a CSS-selected element. */
 function cs(selector: string, prop: string): string {
@@ -30,9 +63,6 @@ function csAll(selector: string, prop: string): string[] {
 	);
 }
 
-// ---------------------------------------------------------------------------
-// 1. Basic vertical timeline
-// ---------------------------------------------------------------------------
 describe('Basic vertical timeline', () => {
 	test('renders as a 2-column grid', async () => {
 		render(BasicVertical);
@@ -92,9 +122,6 @@ describe('Basic vertical timeline', () => {
 	});
 });
 
-// ---------------------------------------------------------------------------
-// 2. Large timeline (size=lg)
-// ---------------------------------------------------------------------------
 describe('Large timeline (size=lg)', () => {
 	test('indicator dot has 32px width (size-8)', async () => {
 		render(LargeTimeline);
@@ -112,9 +139,6 @@ describe('Large timeline (size=lg)', () => {
 	});
 });
 
-// ---------------------------------------------------------------------------
-// 3. Horizontal timeline
-// ---------------------------------------------------------------------------
 describe('Horizontal timeline', () => {
 	test('timeline has data-horizontal attribute', async () => {
 		render(HorizontalTimeline);
@@ -157,9 +181,6 @@ describe('Horizontal timeline', () => {
 	});
 });
 
-// ---------------------------------------------------------------------------
-// 4. Status timeline
-// ---------------------------------------------------------------------------
 describe('Status timeline', () => {
 	test('complete item indicator has bg-primary class', async () => {
 		render(StatusTimeline);
@@ -189,9 +210,6 @@ describe('Status timeline', () => {
 	});
 });
 
-// ---------------------------------------------------------------------------
-// 5. Indicator colors
-// ---------------------------------------------------------------------------
 describe('Indicator colors', () => {
 	test('color=green dot has bg-green-500 class', async () => {
 		render(ColorTimeline);
@@ -218,9 +236,6 @@ describe('Indicator colors', () => {
 	});
 });
 
-// ---------------------------------------------------------------------------
-// 6. Bare indicator
-// ---------------------------------------------------------------------------
 describe('Bare indicator', () => {
 	test('variant=bare dot has no size-* class', async () => {
 		render(BareTimeline);
@@ -239,9 +254,6 @@ describe('Bare indicator', () => {
 	});
 });
 
-// ---------------------------------------------------------------------------
-// 7. Block item
-// ---------------------------------------------------------------------------
 describe('Block item', () => {
 	test('TimelineBlock has col-span-full class', async () => {
 		render(BlockTimeline);
@@ -261,9 +273,6 @@ describe('Block item', () => {
 	});
 });
 
-// ---------------------------------------------------------------------------
-// 8. Subgrid
-// ---------------------------------------------------------------------------
 describe('Subgrid', () => {
 	test('TimelineSubgrid elements have col-span-full class', async () => {
 		render(SubgridTimeline);
@@ -281,9 +290,6 @@ describe('Subgrid', () => {
 	});
 });
 
-// ---------------------------------------------------------------------------
-// 9. Alignment
-// ---------------------------------------------------------------------------
 describe('Alignment', () => {
 	// The ind-cell is a grid that stretches to the full row height.
 	// The dot uses align-self (self-start/center/end) to position within it.
@@ -322,6 +328,62 @@ describe('Alignment', () => {
 		await expect.element(page.getByText('Line one')).toBeInTheDocument();
 		// The first item's dot should have self-end (itemAlign=end overrides align=start)
 		expect(getDot().classList.contains('self-end')).toBe(true);
+	});
+});
+
+describe('No padding/margin Tailwind classes on timeline elements - Use grid instead', () => {
+	test('vertical timeline has no p-*/m-* classes on any timeline node', async () => {
+		render(BasicVertical);
+		await expect.element(page.getByText('Item 1')).toBeInTheDocument();
+		expect(auditTimelineNodes()).toEqual([]);
+	});
+
+	test('horizontal timeline has no p-*/m-* classes on any timeline node', async () => {
+		render(HorizontalTimeline);
+		await expect.element(page.getByText('Step 1')).toBeInTheDocument();
+		expect(auditTimelineNodes()).toEqual([]);
+	});
+
+	test('block timeline has no p-*/m-* classes on any timeline node', async () => {
+		render(BlockTimeline);
+		await expect.element(page.getByText('Block item 1')).toBeInTheDocument();
+		expect(auditTimelineNodes()).toEqual([]);
+	});
+
+	test('subgrid timeline has no p-*/m-* classes on any timeline node', async () => {
+		render(SubgridTimeline);
+		await expect.element(page.getByText('Comment row 1')).toBeInTheDocument();
+		expect(auditTimelineNodes()).toEqual([]);
+	});
+
+	test('status timeline has no p-*/m-* classes on any timeline node', async () => {
+		render(StatusTimeline);
+		await expect.element(page.getByText('Completed step')).toBeInTheDocument();
+		expect(auditTimelineNodes()).toEqual([]);
+	});
+
+	test('color timeline has no p-*/m-* classes on any timeline node', async () => {
+		render(ColorTimeline);
+		await expect.element(page.getByText('Green')).toBeInTheDocument();
+		expect(auditTimelineNodes()).toEqual([]);
+	});
+
+	test('bare indicator timeline has no p-*/m-* classes on any timeline node', async () => {
+		render(BareTimeline);
+		await expect.element(page.getByText('Bare item 1')).toBeInTheDocument();
+		expect(auditTimelineNodes()).toEqual([]);
+	});
+
+	test('large timeline has no p-*/m-* classes on any timeline node', async () => {
+		render(LargeTimeline);
+		await expect.element(page.getByText('Submit')).toBeInTheDocument();
+		expect(auditTimelineNodes()).toEqual([]);
+	});
+
+	test('alignment timeline has no p-*/m-* classes on any timeline node', async () => {
+		render(AlignTimeline, { props: { align: 'start' } });
+		await expect.element(page.getByText('Line one')).toBeInTheDocument();
+		expect(auditTimelineNodes()).toEqual([]);
 	});
 });
 
