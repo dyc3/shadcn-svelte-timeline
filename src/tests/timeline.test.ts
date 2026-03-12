@@ -91,11 +91,11 @@ describe('Basic vertical timeline', () => {
 		expect(displays[displays.length - 1]).toBe('none');
 	});
 
-	test('content cells have ps-4 (16px) padding-inline-start', async () => {
+	test('timeline uses a 16px grid column gap instead of content padding', async () => {
 		render(BasicVertical);
 
 		await expect.element(page.getByText('Item 1')).toBeInTheDocument();
-		expect(cs('.timeline-content-cell', 'padding-inline-start')).toBe('16px');
+		expect(cs('.timeline', 'column-gap')).toBe('16px');
 	});
 
 	test('connector spans full ind-cell height (absolute positioning)', async () => {
@@ -386,4 +386,3 @@ describe('No padding/margin Tailwind classes on timeline elements - Use grid ins
 		expect(auditTimelineNodes()).toEqual([]);
 	});
 });
-

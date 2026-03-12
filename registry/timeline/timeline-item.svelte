@@ -33,7 +33,7 @@
 	using CSS subgrid, so items share the same 2-row track heights.
 -->
 {#if timelineCtx?.horizontal}
-	<div class="timeline-item grid [grid-row:span_2] [grid-template-rows:subgrid]" {...rest}>
+	<div class="timeline-item grid [grid-row:span_3] [grid-template-rows:subgrid]" {...rest}>
 		{@render children?.()}
 	</div>
 {:else}

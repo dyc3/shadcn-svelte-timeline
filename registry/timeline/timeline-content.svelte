@@ -18,17 +18,19 @@
 <!--
 	This is the content column cell (grid column 2).
 
-	Vertical: pb-6 creates spacing between items. The connector line in the
-	indicator cell fills this same height automatically (grid-row: 2, height: 1fr).
-	ps-4 provides visual gap between indicator and content.
+	Vertical: the parent timeline's column gap creates the visual separation from
+	the indicator. This cell becomes a small grid with an empty trailing row so
+	the row height includes inter-item spacing and the connector can span it.
 
-	Horizontal: pt-3 places content below indicators. text-center aligns text
-	under each step.
+	Horizontal: the parent timeline defines a dedicated spacer row between the
+	indicator row and the content row. text-center aligns text under each step.
 -->
 <div
 	class={cn(
 		'timeline-content-cell',
-		timelineCtx?.horizontal ? 'pt-3 text-center' : 'pb-6 ps-4',
+		timelineCtx?.horizontal
+			? 'row-start-3 text-center'
+			: 'grid auto-rows-auto after:block after:h-6 after:content-[""]',
 		className
 	)}
 	{...rest}

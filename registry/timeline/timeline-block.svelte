@@ -20,7 +20,7 @@
 -->
 <div
 	class={cn(
-		'timeline-block col-span-full grid pb-6',
+		'timeline-block col-span-full grid auto-rows-auto after:col-span-full after:block after:h-6 after:content-[""]',
 		'[grid-template-columns:subgrid]',
 		className
 	)}

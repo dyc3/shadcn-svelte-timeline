@@ -49,8 +49,9 @@
 	class={cn(
 		'timeline grid',
 		horizontal
-			? 'auto-cols-fr grid-flow-col grid-rows-[auto_1fr]'
+			? 'auto-cols-fr grid-flow-col grid-rows-[auto_0.75rem_1fr]'
 			: 'grid-cols-[auto_1fr]',
+		!horizontal && 'gap-x-4',
 		className
 	)}
 	{...rest}
