@@ -1,16 +1,16 @@
-import { describe, expect, test } from 'vitest';
-import { render } from 'vitest-browser-svelte';
-import { page } from 'vitest/browser';
-import '../app.css';
-import BasicVertical from './fixtures/BasicVertical.svelte';
-import LargeTimeline from './fixtures/LargeTimeline.svelte';
-import HorizontalTimeline from './fixtures/HorizontalTimeline.svelte';
-import StatusTimeline from './fixtures/StatusTimeline.svelte';
-import ColorTimeline from './fixtures/ColorTimeline.svelte';
-import BareTimeline from './fixtures/BareTimeline.svelte';
-import BlockTimeline from './fixtures/BlockTimeline.svelte';
-import SubgridTimeline from './fixtures/SubgridTimeline.svelte';
-import AlignTimeline from './fixtures/AlignTimeline.svelte';
+import { describe, expect, test } from "vitest";
+import { page } from "vitest/browser";
+import { render } from "vitest-browser-svelte";
+import "../app.css";
+import AlignTimeline from "./fixtures/AlignTimeline.svelte";
+import BareTimeline from "./fixtures/BareTimeline.svelte";
+import BasicVertical from "./fixtures/BasicVertical.svelte";
+import BlockTimeline from "./fixtures/BlockTimeline.svelte";
+import ColorTimeline from "./fixtures/ColorTimeline.svelte";
+import HorizontalTimeline from "./fixtures/HorizontalTimeline.svelte";
+import LargeTimeline from "./fixtures/LargeTimeline.svelte";
+import StatusTimeline from "./fixtures/StatusTimeline.svelte";
+import SubgridTimeline from "./fixtures/SubgridTimeline.svelte";
 
 /**
  * Returns every Tailwind padding or margin utility class found in the class
@@ -30,12 +30,12 @@ function findPaddingMarginClasses(el: Element): string[] {
  */
 function auditTimelineNodes(): string[] {
 	const selectors = [
-		'.timeline',
-		'.timeline-item',
-		'.timeline-ind-cell',
-		'.timeline-content-cell',
-		'.timeline-block',
-		'.timeline-subgrid'
+		".timeline",
+		".timeline-item",
+		".timeline-ind-cell",
+		".timeline-content-cell",
+		".timeline-block",
+		".timeline-subgrid",
 	];
 
 	const violations: string[] = [];
@@ -59,330 +59,365 @@ function cs(selector: string, prop: string): string {
 /** Get all elements matching selector and map each to computed style value. */
 function csAll(selector: string, prop: string): string[] {
 	return [...document.querySelectorAll(selector)].map((el) =>
-		window.getComputedStyle(el as HTMLElement).getPropertyValue(prop).trim()
+		window
+			.getComputedStyle(el as HTMLElement)
+			.getPropertyValue(prop)
+			.trim(),
 	);
 }
 
-describe('Basic vertical timeline', () => {
-	test('renders as a 2-column grid', async () => {
+describe("Basic vertical timeline", () => {
+	test("renders as a 2-column grid", async () => {
 		render(BasicVertical);
 
-		await expect.element(page.getByText('Item 1')).toBeInTheDocument();
-		expect(cs('.timeline', 'display')).toBe('grid');
+		await expect.element(page.getByText("Item 1")).toBeInTheDocument();
+		expect(cs(".timeline", "display")).toBe("grid");
 	});
 
-	test('has 3 content cells', async () => {
+	test("has 3 content cells", async () => {
 		render(BasicVertical);
 
-		await expect.element(page.getByText('Item 1')).toBeInTheDocument();
-		const cells = document.querySelectorAll('.timeline-content-cell');
+		await expect.element(page.getByText("Item 1")).toBeInTheDocument();
+		const cells = document.querySelectorAll(".timeline-content-cell");
 		expect(cells.length).toBe(3);
 	});
 
-	test('last indicator connector is hidden', async () => {
+	test("last indicator connector is hidden", async () => {
 		render(BasicVertical);
 
-		await expect.element(page.getByText('Item 1')).toBeInTheDocument();
-		const displays = csAll('.timeline-ind-cell .connector', 'display');
+		await expect.element(page.getByText("Item 1")).toBeInTheDocument();
+		const displays = csAll(".timeline-ind-cell .connector", "display");
 		expect(displays.length).toBeGreaterThan(1);
 		// All but the last visible
-		displays.slice(0, -1).forEach((d) => expect(d).not.toBe('none'));
+		displays.slice(0, -1).forEach((d) => expect(d).not.toBe("none"));
 		// Last is hidden
-		expect(displays[displays.length - 1]).toBe('none');
+		expect(displays[displays.length - 1]).toBe("none");
 	});
 
-	test('timeline uses a 16px grid column gap instead of content padding', async () => {
+	test("timeline uses a 16px grid column gap instead of content padding", async () => {
 		render(BasicVertical);
 
-		await expect.element(page.getByText('Item 1')).toBeInTheDocument();
-		expect(cs('.timeline', 'column-gap')).toBe('16px');
+		await expect.element(page.getByText("Item 1")).toBeInTheDocument();
+		expect(cs(".timeline", "column-gap")).toBe("16px");
 	});
 
-	test('connector spans full ind-cell height (absolute positioning)', async () => {
+	test("connector spans full ind-cell height (absolute positioning)", async () => {
 		render(BasicVertical);
 
-		await expect.element(page.getByText('Item 1')).toBeInTheDocument();
+		await expect.element(page.getByText("Item 1")).toBeInTheDocument();
 		// Check first (non-last) connector matches its parent ind-cell height
-		const indCell = document.querySelector('.timeline-ind-cell') as HTMLElement;
-		const connector = indCell.querySelector('.connector') as HTMLElement;
+		const indCell = document.querySelector(".timeline-ind-cell") as HTMLElement;
+		const connector = indCell.querySelector(".connector") as HTMLElement;
 		const cellHeight = indCell.getBoundingClientRect().height;
 		const connectorHeight = connector.getBoundingClientRect().height;
 		expect(connectorHeight).toBeCloseTo(cellHeight, 0);
 	});
 
-	test('ind-cell is left of content-cell', async () => {
+	test("ind-cell is left of content-cell", async () => {
 		render(BasicVertical);
 
-		await expect.element(page.getByText('Item 1')).toBeInTheDocument();
-		const indCell = document.querySelector('.timeline-ind-cell') as HTMLElement;
-		const contentCell = document.querySelector('.timeline-content-cell') as HTMLElement;
+		await expect.element(page.getByText("Item 1")).toBeInTheDocument();
+		const indCell = document.querySelector(".timeline-ind-cell") as HTMLElement;
+		const contentCell = document.querySelector(
+			".timeline-content-cell",
+		) as HTMLElement;
 		expect(indCell.getBoundingClientRect().left).toBeLessThan(
-			contentCell.getBoundingClientRect().left
+			contentCell.getBoundingClientRect().left,
 		);
 	});
 });
 
-describe('Large timeline (size=lg)', () => {
-	test('indicator dot has 32px width (size-8)', async () => {
+describe("Large timeline (size=lg)", () => {
+	test("indicator dot has 32px width (size-8)", async () => {
 		render(LargeTimeline);
 
-		await expect.element(page.getByText('Submit')).toBeInTheDocument();
-		expect(cs('.timeline-ind-cell .rounded-full', 'width')).toBe('32px');
+		await expect.element(page.getByText("Submit")).toBeInTheDocument();
+		expect(cs(".timeline-ind-cell .rounded-full", "width")).toBe("32px");
 	});
 
-	test('renders numeric labels 1, 2, 3', async () => {
+	test("renders numeric labels 1, 2, 3", async () => {
 		render(LargeTimeline);
 
-		await expect.element(page.getByText('1')).toBeInTheDocument();
-		await expect.element(page.getByText('2')).toBeInTheDocument();
-		await expect.element(page.getByText('3')).toBeInTheDocument();
+		await expect.element(page.getByText("1")).toBeInTheDocument();
+		await expect.element(page.getByText("2")).toBeInTheDocument();
+		await expect.element(page.getByText("3")).toBeInTheDocument();
 	});
 });
 
-describe('Horizontal timeline', () => {
-	test('timeline has data-horizontal attribute', async () => {
+describe("Horizontal timeline", () => {
+	test("timeline has data-horizontal attribute", async () => {
 		render(HorizontalTimeline);
 
-		await expect.element(page.getByText('Step 1')).toBeInTheDocument();
-		const timeline = document.querySelector('.timeline') as HTMLElement;
-		expect(timeline.getAttribute('data-horizontal')).toBe('true');
+		await expect.element(page.getByText("Step 1")).toBeInTheDocument();
+		const timeline = document.querySelector(".timeline") as HTMLElement;
+		expect(timeline.getAttribute("data-horizontal")).toBe("true");
 	});
 
-	test('TimelineItems render as real grid items (display:grid)', async () => {
+	test("TimelineItems render as real grid items (display:grid)", async () => {
 		render(HorizontalTimeline);
 
-		await expect.element(page.getByText('Step 1')).toBeInTheDocument();
-		const displays = csAll('.timeline-item', 'display');
+		await expect.element(page.getByText("Step 1")).toBeInTheDocument();
+		const displays = csAll(".timeline-item", "display");
 		expect(displays.length).toBeGreaterThan(0);
-		displays.forEach((d) => expect(d).toBe('grid'));
+		displays.forEach((d) => expect(d).toBe("grid"));
 	});
 
-	test('last timeline-item connector is hidden', async () => {
+	test("last timeline-item connector is hidden", async () => {
 		render(HorizontalTimeline);
 
-		await expect.element(page.getByText('Step 1')).toBeInTheDocument();
-		const items = [...document.querySelectorAll('.timeline-item')] as HTMLElement[];
+		await expect.element(page.getByText("Step 1")).toBeInTheDocument();
+		const items = [
+			...document.querySelectorAll(".timeline-item"),
+		] as HTMLElement[];
 		expect(items.length).toBeGreaterThan(1);
 
 		items.slice(0, -1).forEach((item) => {
-			const connector = item.querySelector('.connector') as HTMLElement;
-			expect(window.getComputedStyle(connector).display).not.toBe('none');
+			const connector = item.querySelector(".connector") as HTMLElement;
+			expect(window.getComputedStyle(connector).display).not.toBe("none");
 		});
-		const lastConnector = items[items.length - 1].querySelector('.connector') as HTMLElement;
-		expect(window.getComputedStyle(lastConnector).display).toBe('none');
+		const lastConnector = items[items.length - 1].querySelector(
+			".connector",
+		) as HTMLElement;
+		expect(window.getComputedStyle(lastConnector).display).toBe("none");
 	});
 
-	test('content cells have text-center class', async () => {
+	test("content cells have text-center class", async () => {
 		render(HorizontalTimeline);
 
-		await expect.element(page.getByText('Step 1')).toBeInTheDocument();
-		const cell = document.querySelector('.timeline-content-cell') as HTMLElement;
-		expect(cell.classList.contains('text-center')).toBe(true);
+		await expect.element(page.getByText("Step 1")).toBeInTheDocument();
+		const cell = document.querySelector(
+			".timeline-content-cell",
+		) as HTMLElement;
+		expect(cell.classList.contains("text-center")).toBe(true);
 	});
 });
 
-describe('Status timeline', () => {
-	test('complete item indicator has bg-primary class', async () => {
+describe("Status timeline", () => {
+	test("complete item indicator has bg-primary class", async () => {
 		render(StatusTimeline);
 
-		await expect.element(page.getByText('Completed step')).toBeInTheDocument();
-		const dot = document.querySelector('[data-status="complete"] .rounded-full') as HTMLElement;
+		await expect.element(page.getByText("Completed step")).toBeInTheDocument();
+		const dot = document.querySelector(
+			'[data-status="complete"] .rounded-full',
+		) as HTMLElement;
 		expect(dot).not.toBeNull();
-		expect(dot.classList.contains('bg-primary')).toBe(true);
+		expect(dot.classList.contains("bg-primary")).toBe(true);
 	});
 
-	test('current item indicator has ring-2 class', async () => {
+	test("current item indicator has ring-2 class", async () => {
 		render(StatusTimeline);
 
-		await expect.element(page.getByText('Current step')).toBeInTheDocument();
-		const dot = document.querySelector('[data-status="current"] .rounded-full') as HTMLElement;
+		await expect.element(page.getByText("Current step")).toBeInTheDocument();
+		const dot = document.querySelector(
+			'[data-status="current"] .rounded-full',
+		) as HTMLElement;
 		expect(dot).not.toBeNull();
-		expect(dot.classList.contains('ring-2')).toBe(true);
+		expect(dot.classList.contains("ring-2")).toBe(true);
 	});
 
-	test('incomplete item indicator has muted foreground class', async () => {
+	test("incomplete item indicator has muted foreground class", async () => {
 		render(StatusTimeline);
 
-		await expect.element(page.getByText('Incomplete step')).toBeInTheDocument();
-		const dot = document.querySelector('[data-status="incomplete"] .rounded-full') as HTMLElement;
+		await expect.element(page.getByText("Incomplete step")).toBeInTheDocument();
+		const dot = document.querySelector(
+			'[data-status="incomplete"] .rounded-full',
+		) as HTMLElement;
 		expect(dot).not.toBeNull();
 		expect(dot.className).toMatch(/bg-muted-foreground/);
 	});
 });
 
-describe('Indicator colors', () => {
-	test('color=green dot has bg-green-500 class', async () => {
+describe("Indicator colors", () => {
+	test("color=green dot has bg-green-500 class", async () => {
 		render(ColorTimeline);
 
-		await expect.element(page.getByText('Green')).toBeInTheDocument();
-		const dots = [...document.querySelectorAll('.timeline-ind-cell .rounded-full')] as HTMLElement[];
-		expect(dots.some((d) => d.classList.contains('bg-green-500'))).toBe(true);
+		await expect.element(page.getByText("Green")).toBeInTheDocument();
+		const dots = [
+			...document.querySelectorAll(".timeline-ind-cell .rounded-full"),
+		] as HTMLElement[];
+		expect(dots.some((d) => d.classList.contains("bg-green-500"))).toBe(true);
 	});
 
-	test('color=red dot has bg-red-500 class', async () => {
+	test("color=red dot has bg-red-500 class", async () => {
 		render(ColorTimeline);
 
-		await expect.element(page.getByText('Red')).toBeInTheDocument();
-		const dots = [...document.querySelectorAll('.timeline-ind-cell .rounded-full')] as HTMLElement[];
-		expect(dots.some((d) => d.classList.contains('bg-red-500'))).toBe(true);
+		await expect.element(page.getByText("Red")).toBeInTheDocument();
+		const dots = [
+			...document.querySelectorAll(".timeline-ind-cell .rounded-full"),
+		] as HTMLElement[];
+		expect(dots.some((d) => d.classList.contains("bg-red-500"))).toBe(true);
 	});
 
-	test('color=amber dot has bg-amber-500 class', async () => {
+	test("color=amber dot has bg-amber-500 class", async () => {
 		render(ColorTimeline);
 
-		await expect.element(page.getByText('Amber')).toBeInTheDocument();
-		const dots = [...document.querySelectorAll('.timeline-ind-cell .rounded-full')] as HTMLElement[];
-		expect(dots.some((d) => d.classList.contains('bg-amber-500'))).toBe(true);
+		await expect.element(page.getByText("Amber")).toBeInTheDocument();
+		const dots = [
+			...document.querySelectorAll(".timeline-ind-cell .rounded-full"),
+		] as HTMLElement[];
+		expect(dots.some((d) => d.classList.contains("bg-amber-500"))).toBe(true);
 	});
 });
 
-describe('Bare indicator', () => {
-	test('variant=bare dot has no size-* class', async () => {
+describe("Bare indicator", () => {
+	test("variant=bare dot has no size-* class", async () => {
 		render(BareTimeline);
 
-		await expect.element(page.getByText('Bare item 1')).toBeInTheDocument();
-		const dot = document.querySelector('.timeline-ind-cell .rounded-full') as HTMLElement;
+		await expect.element(page.getByText("Bare item 1")).toBeInTheDocument();
+		const dot = document.querySelector(
+			".timeline-ind-cell .rounded-full",
+		) as HTMLElement;
 		expect(dot.className).not.toMatch(/size-\d/);
 	});
 
-	test('variant=bare dot has no color bg-* class', async () => {
+	test("variant=bare dot has no color bg-* class", async () => {
 		render(BareTimeline);
 
-		await expect.element(page.getByText('Bare item 1')).toBeInTheDocument();
-		const dot = document.querySelector('.timeline-ind-cell .rounded-full') as HTMLElement;
-		expect(dot.className).not.toMatch(/bg-zinc|bg-green|bg-red|bg-amber|bg-blue|bg-purple|bg-cyan|bg-pink|bg-primary|bg-muted/);
+		await expect.element(page.getByText("Bare item 1")).toBeInTheDocument();
+		const dot = document.querySelector(
+			".timeline-ind-cell .rounded-full",
+		) as HTMLElement;
+		expect(dot.className).not.toMatch(
+			/bg-zinc|bg-green|bg-red|bg-amber|bg-blue|bg-purple|bg-cyan|bg-pink|bg-primary|bg-muted/,
+		);
 	});
 });
 
-describe('Block item', () => {
-	test('TimelineBlock has col-span-full class', async () => {
+describe("Block item", () => {
+	test("TimelineBlock has col-span-full class", async () => {
 		render(BlockTimeline);
 
-		await expect.element(page.getByText('Block item 1')).toBeInTheDocument();
-		const block = document.querySelector('.timeline-block') as HTMLElement;
-		expect(block.classList.contains('col-span-full')).toBe(true);
+		await expect.element(page.getByText("Block item 1")).toBeInTheDocument();
+		const block = document.querySelector(".timeline-block") as HTMLElement;
+		expect(block.classList.contains("col-span-full")).toBe(true);
 	});
 
-	test('TimelineBlock grid-template-columns is set (not none)', async () => {
+	test("TimelineBlock grid-template-columns is set (not none)", async () => {
 		render(BlockTimeline);
 
-		await expect.element(page.getByText('Block item 1')).toBeInTheDocument();
-		const colTemplate = cs('.timeline-block', 'grid-template-columns');
+		await expect.element(page.getByText("Block item 1")).toBeInTheDocument();
+		const colTemplate = cs(".timeline-block", "grid-template-columns");
 		expect(colTemplate).toBeTruthy();
-		expect(colTemplate).not.toBe('none');
+		expect(colTemplate).not.toBe("none");
 	});
 });
 
-describe('Subgrid', () => {
-	test('TimelineSubgrid elements have col-span-full class', async () => {
+describe("Subgrid", () => {
+	test("TimelineSubgrid elements have col-span-full class", async () => {
 		render(SubgridTimeline);
 
-		await expect.element(page.getByText('Comment row 1')).toBeInTheDocument();
-		const subgrids = [...document.querySelectorAll('.timeline-subgrid')] as HTMLElement[];
-		subgrids.forEach((sg) => expect(sg.classList.contains('col-span-full')).toBe(true));
+		await expect.element(page.getByText("Comment row 1")).toBeInTheDocument();
+		const subgrids = [
+			...document.querySelectorAll(".timeline-subgrid"),
+		] as HTMLElement[];
+		subgrids.forEach((sg) =>
+			expect(sg.classList.contains("col-span-full")).toBe(true),
+		);
 	});
 
-	test('two subgrid rows are rendered', async () => {
+	test("two subgrid rows are rendered", async () => {
 		render(SubgridTimeline);
 
-		await expect.element(page.getByText('Comment row 1')).toBeInTheDocument();
-		expect(document.querySelectorAll('.timeline-subgrid').length).toBe(2);
+		await expect.element(page.getByText("Comment row 1")).toBeInTheDocument();
+		expect(document.querySelectorAll(".timeline-subgrid").length).toBe(2);
 	});
 });
 
-describe('Alignment', () => {
+describe("Alignment", () => {
 	// The ind-cell is a grid that stretches to the full row height.
 	// The dot uses align-self (self-start/center/end) to position within it.
 	// The connector is absolute top-0/bottom-0 so it always spans the full height.
 
 	function getDot(): HTMLElement {
-		return document.querySelector('.timeline-ind-cell .rounded-full') as HTMLElement;
+		return document.querySelector(
+			".timeline-ind-cell .rounded-full",
+		) as HTMLElement;
 	}
 
-	test('align=start dot has self-start class', async () => {
-		render(AlignTimeline, { props: { align: 'start' } });
-		await expect.element(page.getByText('Line one')).toBeInTheDocument();
-		expect(getDot().classList.contains('self-start')).toBe(true);
+	test("align=start dot has self-start class", async () => {
+		render(AlignTimeline, { props: { align: "start" } });
+		await expect.element(page.getByText("Line one")).toBeInTheDocument();
+		expect(getDot().classList.contains("self-start")).toBe(true);
 	});
 
-	test('align=end dot has self-end class', async () => {
-		render(AlignTimeline, { props: { align: 'end' } });
-		await expect.element(page.getByText('Line one')).toBeInTheDocument();
-		expect(getDot().classList.contains('self-end')).toBe(true);
+	test("align=end dot has self-end class", async () => {
+		render(AlignTimeline, { props: { align: "end" } });
+		await expect.element(page.getByText("Line one")).toBeInTheDocument();
+		expect(getDot().classList.contains("self-end")).toBe(true);
 	});
 
-	test('align=center dot has self-center class', async () => {
-		render(AlignTimeline, { props: { align: 'center' } });
-		await expect.element(page.getByText('Line one')).toBeInTheDocument();
-		expect(getDot().classList.contains('self-center')).toBe(true);
+	test("align=center dot has self-center class", async () => {
+		render(AlignTimeline, { props: { align: "center" } });
+		await expect.element(page.getByText("Line one")).toBeInTheDocument();
+		expect(getDot().classList.contains("self-center")).toBe(true);
 	});
 
-	test('align=baseline dot has self-start class (same as start)', async () => {
-		render(AlignTimeline, { props: { align: 'baseline' } });
-		await expect.element(page.getByText('Line one')).toBeInTheDocument();
-		expect(getDot().classList.contains('self-start')).toBe(true);
+	test("align=baseline dot has self-start class (same as start)", async () => {
+		render(AlignTimeline, { props: { align: "baseline" } });
+		await expect.element(page.getByText("Line one")).toBeInTheDocument();
+		expect(getDot().classList.contains("self-start")).toBe(true);
 	});
 
-	test('per-item align overrides timeline-level align', async () => {
-		render(AlignTimeline, { props: { align: 'start', itemAlign: 'end' } });
-		await expect.element(page.getByText('Line one')).toBeInTheDocument();
+	test("per-item align overrides timeline-level align", async () => {
+		render(AlignTimeline, { props: { align: "start", itemAlign: "end" } });
+		await expect.element(page.getByText("Line one")).toBeInTheDocument();
 		// The first item's dot should have self-end (itemAlign=end overrides align=start)
-		expect(getDot().classList.contains('self-end')).toBe(true);
+		expect(getDot().classList.contains("self-end")).toBe(true);
 	});
 });
 
-describe('No padding/margin Tailwind classes on timeline elements - Use grid instead', () => {
-	test('vertical timeline has no p-*/m-* classes on any timeline node', async () => {
+describe("No padding/margin Tailwind classes on timeline elements - Use grid instead", () => {
+	test("vertical timeline has no p-*/m-* classes on any timeline node", async () => {
 		render(BasicVertical);
-		await expect.element(page.getByText('Item 1')).toBeInTheDocument();
+		await expect.element(page.getByText("Item 1")).toBeInTheDocument();
 		expect(auditTimelineNodes()).toEqual([]);
 	});
 
-	test('horizontal timeline has no p-*/m-* classes on any timeline node', async () => {
+	test("horizontal timeline has no p-*/m-* classes on any timeline node", async () => {
 		render(HorizontalTimeline);
-		await expect.element(page.getByText('Step 1')).toBeInTheDocument();
+		await expect.element(page.getByText("Step 1")).toBeInTheDocument();
 		expect(auditTimelineNodes()).toEqual([]);
 	});
 
-	test('block timeline has no p-*/m-* classes on any timeline node', async () => {
+	test("block timeline has no p-*/m-* classes on any timeline node", async () => {
 		render(BlockTimeline);
-		await expect.element(page.getByText('Block item 1')).toBeInTheDocument();
+		await expect.element(page.getByText("Block item 1")).toBeInTheDocument();
 		expect(auditTimelineNodes()).toEqual([]);
 	});
 
-	test('subgrid timeline has no p-*/m-* classes on any timeline node', async () => {
+	test("subgrid timeline has no p-*/m-* classes on any timeline node", async () => {
 		render(SubgridTimeline);
-		await expect.element(page.getByText('Comment row 1')).toBeInTheDocument();
+		await expect.element(page.getByText("Comment row 1")).toBeInTheDocument();
 		expect(auditTimelineNodes()).toEqual([]);
 	});
 
-	test('status timeline has no p-*/m-* classes on any timeline node', async () => {
+	test("status timeline has no p-*/m-* classes on any timeline node", async () => {
 		render(StatusTimeline);
-		await expect.element(page.getByText('Completed step')).toBeInTheDocument();
+		await expect.element(page.getByText("Completed step")).toBeInTheDocument();
 		expect(auditTimelineNodes()).toEqual([]);
 	});
 
-	test('color timeline has no p-*/m-* classes on any timeline node', async () => {
+	test("color timeline has no p-*/m-* classes on any timeline node", async () => {
 		render(ColorTimeline);
-		await expect.element(page.getByText('Green')).toBeInTheDocument();
+		await expect.element(page.getByText("Green")).toBeInTheDocument();
 		expect(auditTimelineNodes()).toEqual([]);
 	});
 
-	test('bare indicator timeline has no p-*/m-* classes on any timeline node', async () => {
+	test("bare indicator timeline has no p-*/m-* classes on any timeline node", async () => {
 		render(BareTimeline);
-		await expect.element(page.getByText('Bare item 1')).toBeInTheDocument();
+		await expect.element(page.getByText("Bare item 1")).toBeInTheDocument();
 		expect(auditTimelineNodes()).toEqual([]);
 	});
 
-	test('large timeline has no p-*/m-* classes on any timeline node', async () => {
+	test("large timeline has no p-*/m-* classes on any timeline node", async () => {
 		render(LargeTimeline);
-		await expect.element(page.getByText('Submit')).toBeInTheDocument();
+		await expect.element(page.getByText("Submit")).toBeInTheDocument();
 		expect(auditTimelineNodes()).toEqual([]);
 	});
 
-	test('alignment timeline has no p-*/m-* classes on any timeline node', async () => {
-		render(AlignTimeline, { props: { align: 'start' } });
-		await expect.element(page.getByText('Line one')).toBeInTheDocument();
+	test("alignment timeline has no p-*/m-* classes on any timeline node", async () => {
+		render(AlignTimeline, { props: { align: "start" } });
+		await expect.element(page.getByText("Line one")).toBeInTheDocument();
 		expect(auditTimelineNodes()).toEqual([]);
 	});
 });

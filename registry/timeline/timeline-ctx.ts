@@ -1,14 +1,14 @@
-export const TIMELINE_CTX = Symbol('timeline');
+export const TIMELINE_CTX = Symbol("timeline");
 
 export interface TimelineContext {
 	horizontal: boolean;
-	size: 'default' | 'lg';
-	align: 'start' | 'baseline' | 'center' | 'end';
+	size: "default" | "lg";
+	align: "start" | "baseline" | "center" | "end";
 }
 
-export const TIMELINE_ITEM_CTX = Symbol('timeline-item');
+export const TIMELINE_ITEM_CTX = Symbol("timeline-item");
 
 export interface TimelineItemContext {
-	status: 'complete' | 'current' | 'incomplete' | undefined;
-	align: 'start' | 'baseline' | 'center' | 'end' | undefined;
+	status: "complete" | "current" | "incomplete" | undefined;
+	align: "start" | "baseline" | "center" | "end" | undefined;
 }

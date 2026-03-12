@@ -1,12 +1,12 @@
 <script lang="ts">
-	import '../app.css';
+import "../app.css";
 
-	let { children } = $props();
-	let dark = $state(false);
+let { children } = $props();
+let dark = $state(false);
 
-	$effect(() => {
-		document.documentElement.classList.toggle('dark', dark);
-	});
+$effect(() => {
+	document.documentElement.classList.toggle("dark", dark);
+});
 </script>
 
 <div class="min-h-screen bg-background text-foreground">
@@ -15,7 +15,8 @@
 			onclick={() => (dark = !dark)}
 			class="rounded-md border border-border bg-background px-3 py-1.5 text-sm font-medium text-foreground hover:bg-accent"
 		>
-			{dark ? 'Light' : 'Dark'} mode
+			{dark ? 'Light' : 'Dark'}
+			mode
 		</button>
 	</div>
 	{@render children()}

@@ -1,38 +1,38 @@
 <script lang="ts">
-	import { setContext } from 'svelte';
-	import type { Snippet } from 'svelte';
-	import { cn } from '$lib/utils';
-	import { TIMELINE_CTX, type TimelineContext } from './timeline-ctx.js';
+import type { Snippet } from "svelte";
+import { setContext } from "svelte";
+import { cn } from "$lib/utils";
+import { TIMELINE_CTX, type TimelineContext } from "./timeline-ctx.js";
 
-	interface Props {
-		horizontal?: boolean;
-		size?: 'default' | 'lg';
-		align?: 'start' | 'baseline' | 'center' | 'end';
-		children?: Snippet;
-		class?: string;
-		[key: string]: unknown;
-	}
+interface Props {
+	horizontal?: boolean;
+	size?: "default" | "lg";
+	align?: "start" | "baseline" | "center" | "end";
+	children?: Snippet;
+	class?: string;
+	[key: string]: unknown;
+}
 
-	let {
-		horizontal = false,
-		size = 'default',
-		align = 'baseline',
-		children,
-		class: className,
-		...rest
-	}: Props = $props();
+let {
+	horizontal = false,
+	size = "default",
+	align = "baseline",
+	children,
+	class: className,
+	...rest
+}: Props = $props();
 
-	setContext<TimelineContext>(TIMELINE_CTX, {
-		get horizontal() {
-			return horizontal;
-		},
-		get size() {
-			return size;
-		},
-		get align() {
-			return align;
-		}
-	});
+setContext<TimelineContext>(TIMELINE_CTX, {
+	get horizontal() {
+		return horizontal;
+	},
+	get size() {
+		return size;
+	},
+	get align() {
+		return align;
+	},
+});
 </script>
 
 <!--

@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
-	import type { Snippet } from 'svelte';
-	import { cn } from '$lib/utils';
-	import { TIMELINE_CTX, type TimelineContext } from './timeline-ctx.js';
+import type { Snippet } from "svelte";
+import { getContext } from "svelte";
+import { cn } from "$lib/utils";
+import { TIMELINE_CTX, type TimelineContext } from "./timeline-ctx.js";
 
-	interface Props {
-		children?: Snippet;
-		class?: string;
-		[key: string]: unknown;
-	}
+interface Props {
+	children?: Snippet;
+	class?: string;
+	[key: string]: unknown;
+}
 
-	let { children, class: className, ...rest }: Props = $props();
+let { children, class: className, ...rest }: Props = $props();
 
-	const timelineCtx = getContext<TimelineContext>(TIMELINE_CTX);
+const timelineCtx = getContext<TimelineContext>(TIMELINE_CTX);
 </script>
 
 <!--

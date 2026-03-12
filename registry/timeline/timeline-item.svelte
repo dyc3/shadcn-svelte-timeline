@@ -1,27 +1,32 @@
 <script lang="ts">
-	import { getContext, setContext } from 'svelte';
-	import type { Snippet } from 'svelte';
-	import { TIMELINE_CTX, TIMELINE_ITEM_CTX, type TimelineContext, type TimelineItemContext } from './timeline-ctx.js';
+import type { Snippet } from "svelte";
+import { getContext, setContext } from "svelte";
+import {
+	TIMELINE_CTX,
+	TIMELINE_ITEM_CTX,
+	type TimelineContext,
+	type TimelineItemContext,
+} from "./timeline-ctx.js";
 
-	interface Props {
-		status?: 'complete' | 'current' | 'incomplete';
-		align?: 'start' | 'baseline' | 'center' | 'end';
-		children?: Snippet;
-		[key: string]: unknown;
-	}
+interface Props {
+	status?: "complete" | "current" | "incomplete";
+	align?: "start" | "baseline" | "center" | "end";
+	children?: Snippet;
+	[key: string]: unknown;
+}
 
-	let { status, align, children, ...rest }: Props = $props();
+let { status, align, children, ...rest }: Props = $props();
 
-	const timelineCtx = getContext<TimelineContext>(TIMELINE_CTX);
+const timelineCtx = getContext<TimelineContext>(TIMELINE_CTX);
 
-	setContext<TimelineItemContext>(TIMELINE_ITEM_CTX, {
-		get status() {
-			return status;
-		},
-		get align() {
-			return align;
-		}
-	});
+setContext<TimelineItemContext>(TIMELINE_ITEM_CTX, {
+	get status() {
+		return status;
+	},
+	get align() {
+		return align;
+	},
+});
 </script>
 
 <!--
@@ -33,7 +38,10 @@
 	using CSS subgrid, so items share the same 2-row track heights.
 -->
 {#if timelineCtx?.horizontal}
-	<div class="timeline-item grid [grid-row:span_3] [grid-template-rows:subgrid]" {...rest}>
+	<div
+		class="timeline-item grid [grid-row:span_3] [grid-template-rows:subgrid]"
+		{...rest}
+	>
 		{@render children?.()}
 	</div>
 {:else}
