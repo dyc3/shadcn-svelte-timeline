@@ -345,30 +345,33 @@
 						<p class="text-sm font-medium">curtisss <span class="font-normal text-muted-foreground">requested a review · 4 days ago</span></p>
 					</TimelineContent>
 				</TimelineItem>
-			<TimelineItem>
-				<TimelineBlock class="overflow-hidden rounded-xl border bg-card">
-					<!-- First subgrid row: comment -->
-					<TimelineSubgrid class="bg-muted/30 p-3">
-						<div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-[10px] font-semibold">JR</div>
-						<div class="space-y-1">
-							<p class="text-sm font-medium">james_rob <span class="font-normal text-muted-foreground">commented · 4 days ago</span></p>
-							<p class="text-sm text-muted-foreground">Contrast slider goes a bit wild at the top end...</p>
-						</div>
-					</TimelineSubgrid>
-					<div class="border-t col-span-full"></div>
-					<!-- Second subgrid row: reply input -->
-					<TimelineSubgrid class="bg-background p-3">
-						<div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">ME</div>
-						<div>
-							<input
-								type="text"
-								placeholder="Leave a reply..."
-								class="w-full rounded-md border bg-background px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-ring"
-							/>
-						</div>
-					</TimelineSubgrid>
-				</TimelineBlock>
-			</TimelineItem>
+				<TimelineItem>
+					<div class="col-span-full grid auto-rows-auto grid-cols-subgrid">
+						<TimelineBlock class="overflow-hidden rounded-xl border bg-card after:h-0">
+							<!-- First subgrid row: comment -->
+							<TimelineSubgrid class="bg-muted/30 p-3">
+								<div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-[10px] font-semibold">JR</div>
+								<div class="space-y-1">
+									<p class="text-sm font-medium">james_rob <span class="font-normal text-muted-foreground">commented · 4 days ago</span></p>
+									<p class="text-sm text-muted-foreground">Contrast slider goes a bit wild at the top end...</p>
+								</div>
+							</TimelineSubgrid>
+							<div class="border-t col-span-full"></div>
+							<!-- Second subgrid row: reply input -->
+							<TimelineSubgrid class="bg-background p-3">
+								<div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">ME</div>
+								<div>
+									<input
+										type="text"
+										placeholder="Leave a reply..."
+										class="w-full rounded-md border bg-background px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-ring"
+									/>
+								</div>
+							</TimelineSubgrid>
+						</TimelineBlock>
+						<div aria-hidden="true" class="col-span-full h-6"></div>
+					</div>
+				</TimelineItem>
 				<TimelineItem>
 					<TimelineIndicator color="green">
 						<svg class="size-3 text-white" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
