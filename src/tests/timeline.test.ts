@@ -325,7 +325,7 @@ describe("Subgrid", () => {
 
 describe("Alignment", () => {
 	// The ind-cell is a grid that stretches to the full row height.
-	// The dot uses align-self (self-start/center/end) to position within it.
+	// The dot uses align-self to position within it.
 	// The connector is absolute top-0/bottom-0 so it always spans the full height.
 
 	function getDot(): HTMLElement {
@@ -340,18 +340,6 @@ describe("Alignment", () => {
 		expect(getDot().classList.contains("self-start")).toBe(true);
 	});
 
-	test("align=end dot has self-end class", async () => {
-		render(AlignTimeline, { props: { align: "end" } });
-		await expect.element(page.getByText("Line one")).toBeInTheDocument();
-		expect(getDot().classList.contains("self-end")).toBe(true);
-	});
-
-	test("align=center dot has self-center class", async () => {
-		render(AlignTimeline, { props: { align: "center" } });
-		await expect.element(page.getByText("Line one")).toBeInTheDocument();
-		expect(getDot().classList.contains("self-center")).toBe(true);
-	});
-
 	test("align=baseline dot has self-start class (same as start)", async () => {
 		render(AlignTimeline, { props: { align: "baseline" } });
 		await expect.element(page.getByText("Line one")).toBeInTheDocument();
@@ -359,10 +347,15 @@ describe("Alignment", () => {
 	});
 
 	test("per-item align overrides timeline-level align", async () => {
-		render(AlignTimeline, { props: { align: "start", itemAlign: "end" } });
+		render(AlignTimeline, { props: { align: "start", itemAlign: "baseline" } });
 		await expect.element(page.getByText("Line one")).toBeInTheDocument();
-		// The first item's dot should have self-end (itemAlign=end overrides align=start)
-		expect(getDot().classList.contains("self-end")).toBe(true);
+		expect(getDot().classList.contains("self-start")).toBe(true);
+	});
+
+	test("horizontal timelines ignore align", async () => {
+		render(AlignTimeline, { props: { horizontal: true, align: "start" } });
+		await expect.element(page.getByText("Line one")).toBeInTheDocument();
+		expect(getDot().classList.contains("self-start")).toBe(false);
 	});
 });
 

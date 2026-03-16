@@ -10,7 +10,7 @@ import {
 
 interface Props {
 	status?: "complete" | "current" | "incomplete";
-	align?: "start" | "baseline" | "center" | "end";
+	align?: "start" | "baseline";
 	children?: Snippet;
 	[key: string]: unknown;
 }

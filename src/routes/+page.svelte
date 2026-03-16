@@ -659,23 +659,27 @@ import TimelineSubgrid from "../../registry/timeline/timeline-subgrid.svelte";
 		<p class="text-sm text-muted-foreground">
 			Use
 			<code class="rounded bg-muted px-1 py-0.5 text-xs font-mono">align</code>
-			to control how the indicator aligns with content.
+			to control the indicator's vertical placement in vertical timelines.
+		</p>
+		<p class="text-sm text-muted-foreground">
+			<code class="rounded bg-muted px-1 py-0.5 text-xs font-mono"
+				>baseline</code
+			>
+			is the default and currently renders the same as
+			<code class="rounded bg-muted px-1 py-0.5 text-xs font-mono">start</code>.
 		</p>
 		<div class="grid grid-cols-2 gap-4">
-			{#each ['start', 'baseline', 'center', 'end'] as alignVal}
+			{#each ['start', 'baseline'] as alignVal}
 				<div class="rounded-lg border p-4">
 					<p
 						class="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground"
 					>
 						{alignVal}
 					</p>
-					<Timeline
-						size="lg"
-						align={alignVal as 'start' | 'baseline' | 'center' | 'end'}
-					>
+					<Timeline size="lg" align={alignVal as 'start' | 'baseline'}>
 						<TimelineItem>
 							<TimelineIndicator
-								>{alignVal === 'start' ? '1' : alignVal === 'baseline' ? '2' : alignVal === 'center' ? '3' : '4'}</TimelineIndicator
+								>{alignVal === 'start' ? '1' : '2'}</TimelineIndicator
 							>
 							<TimelineContent>
 								<p class="text-sm font-semibold">
@@ -683,18 +687,18 @@ import TimelineSubgrid from "../../registry/timeline/timeline-subgrid.svelte";
 									align
 								</p>
 								<p class="text-sm text-muted-foreground">
-									Align indicator and content to the {alignVal}
+									Place the indicator at the {alignVal} edge of the item row.
 								</p>
 							</TimelineContent>
 						</TimelineItem>
 						<TimelineItem>
 							<TimelineIndicator
-								>{alignVal === 'start' ? '2' : alignVal === 'baseline' ? '3' : alignVal === 'center' ? '4' : '5'}</TimelineIndicator
+								>{alignVal === 'start' ? '2' : '3'}</TimelineIndicator
 							>
 							<TimelineContent>
 								<p class="text-sm font-semibold">Second item</p>
 								<p class="text-sm text-muted-foreground">
-									Another item showing alignment
+									Another item using the same indicator placement.
 								</p>
 							</TimelineContent>
 						</TimelineItem>

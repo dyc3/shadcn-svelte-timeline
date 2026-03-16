@@ -7,7 +7,7 @@ import { TIMELINE_CTX, type TimelineContext } from "./timeline-ctx.js";
 interface Props {
 	horizontal?: boolean;
 	size?: "default" | "lg";
-	align?: "start" | "baseline" | "center" | "end";
+	align?: "start" | "baseline";
 	children?: Snippet;
 	class?: string;
 	[key: string]: unknown;

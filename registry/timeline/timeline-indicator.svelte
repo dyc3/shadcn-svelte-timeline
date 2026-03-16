@@ -77,20 +77,17 @@ const sizeClass = $derived(
 
 // Vertical alignment: align-self on the dot inside the ind-cell grid.
 // The ind-cell is a grid that stretches to the full row height (set by col 2).
-// The dot is the only grid item; align-self positions it within that height.
+// Both supported alignments currently resolve to self-start.
 const dotAlignSelf = $derived((): string => {
 	if (timelineCtx?.horizontal) return "";
-	const a = itemCtx?.align ?? timelineCtx?.align ?? "baseline";
-	if (a === "end") return "self-end";
-	if (a === "center") return "self-center";
-	return "self-start"; // 'start' and 'baseline'
+	return "self-start";
 });
 </script>
 
 <!--
 	Vertical: the ind-cell is a single-column grid (display:grid) that stretches
 	to the full row height because grid items default to align-self:stretch.
-	The dot is placed with align-self (self-start/center/end) for alignment.
+	The dot is placed with align-self for vertical alignment.
 	The connector is absolutely positioned top-0/bottom-0 behind the dot,
 	spanning the full cell height (= the full grid row height).
 

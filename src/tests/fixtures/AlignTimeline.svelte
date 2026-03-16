@@ -5,14 +5,19 @@ import TimelineIndicator from "../../../registry/timeline/timeline-indicator.sve
 import TimelineItem from "../../../registry/timeline/timeline-item.svelte";
 
 interface Props {
-	align?: "start" | "baseline" | "center" | "end";
-	itemAlign?: "start" | "baseline" | "center" | "end";
+	horizontal?: boolean;
+	align?: "start" | "baseline";
+	itemAlign?: "start" | "baseline";
 }
 
-let { align = "baseline", itemAlign = undefined }: Props = $props();
+let {
+	horizontal = false,
+	align = "baseline",
+	itemAlign = undefined,
+}: Props = $props();
 </script>
 
-<Timeline {align}>
+<Timeline {horizontal} {align}>
 	<TimelineItem align={itemAlign}>
 		<TimelineIndicator />
 		<TimelineContent>

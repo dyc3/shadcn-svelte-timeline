@@ -4,7 +4,9 @@
 		"title": "Timeline",
 		"type": "registry:ui",
 		"description": "A flexible timeline component with vertical/horizontal layouts, status indicators, and CSS grid alignment.",
-		"registryDependencies": ["utils"],
+		"registryDependencies": [
+			"utils"
+		],
 		"relativeUrl": "timeline.json"
 	}
 ]
