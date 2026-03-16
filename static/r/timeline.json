@@ -39,6 +39,11 @@
 			"target": "timeline/timeline-subgrid.svelte"
 		},
 		{
+			"content": "export const TIMELINE_CTX = Symbol(\"timeline\");\n\nexport interface TimelineContext {\n\thorizontal: boolean;\n\tsize: \"default\" | \"lg\";\n\talign: \"start\" | \"baseline\";\n}\n\nexport const TIMELINE_ITEM_CTX = Symbol(\"timeline-item\");\n\nexport interface TimelineItemContext {\n\tstatus: \"complete\" | \"current\" | \"incomplete\" | undefined;\n\talign: \"start\" | \"baseline\" | undefined;\n}\n",
+			"type": "registry:ui",
+			"target": "timeline/timeline-ctx.ts"
+		},
+		{
 			"content": "import Root from \"./timeline.svelte\";\nimport Block from \"./timeline-block.svelte\";\nimport Content from \"./timeline-content.svelte\";\nimport Indicator from \"./timeline-indicator.svelte\";\nimport Item from \"./timeline-item.svelte\";\nimport Subgrid from \"./timeline-subgrid.svelte\";\n\nexport type { TimelineContext, TimelineItemContext } from \"./timeline-ctx.js\";\n\nexport {\n\tRoot,\n\tBlock,\n\tContent,\n\tIndicator,\n\tItem,\n\tSubgrid,\n\t//\n\tRoot as Timeline,\n\tBlock as TimelineBlock,\n\tContent as TimelineContent,\n\tIndicator as TimelineIndicator,\n\tItem as TimelineItem,\n\tSubgrid as TimelineSubgrid,\n};\n",
 			"type": "registry:ui",
 			"target": "timeline/index.ts"

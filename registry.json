@@ -35,6 +35,10 @@
 					"type": "registry:ui"
 				},
 				{
+					"path": "src/lib/registry/ui/timeline/timeline-ctx.ts",
+					"type": "registry:ui"
+				},
+				{
 					"path": "src/lib/registry/ui/timeline/index.ts",
 					"type": "registry:ui"
 				}
