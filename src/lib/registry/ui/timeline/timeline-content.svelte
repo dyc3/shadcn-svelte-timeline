@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { Snippet } from "svelte";
 import { getContext } from "svelte";
-import { cn } from "$lib/utils";
+import { cn } from "$lib/utils.js";
 import { TIMELINE_CTX, type TimelineContext } from "./timeline-ctx.js";
 
 interface Props {
@@ -27,12 +27,12 @@ const timelineCtx = getContext<TimelineContext>(TIMELINE_CTX);
 -->
 <div
 	class={cn(
-		'timeline-content-cell',
-		timelineCtx?.horizontal
-			? 'row-start-3 text-center'
-			: 'grid auto-rows-auto after:block after:h-6 after:content-[""]',
-		className
-	)}
+        "timeline-content-cell",
+        timelineCtx?.horizontal
+            ? "row-start-3 text-center"
+            : 'grid auto-rows-auto after:block after:h-6 after:content-[""]',
+        className,
+    )}
 	{...rest}
 >
 	{@render children?.()}

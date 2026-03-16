@@ -2,7 +2,7 @@
 import type { Snippet } from "svelte";
 import { getContext } from "svelte";
 import { tv } from "tailwind-variants";
-import { cn } from "$lib/utils";
+import { cn } from "$lib/utils.js";
 import {
 	TIMELINE_CTX,
 	TIMELINE_ITEM_CTX,
@@ -132,11 +132,11 @@ const dotAlignSelf = $derived((): string => {
 	<!-- The indicator dot/icon -->
 	<div
 		class={cn(
-			slots.dot(),
-			className,
-			statusClass,
-			!timelineCtx?.horizontal && dotAlignSelf()
-		)}
+            slots.dot(),
+            className,
+            statusClass,
+            !timelineCtx?.horizontal && dotAlignSelf(),
+        )}
 	>
 		{#if children}
 			{@render children()}

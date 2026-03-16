@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { Snippet } from "svelte";
 import { setContext } from "svelte";
-import { cn } from "$lib/utils";
+import { cn } from "$lib/utils.js";
 import { TIMELINE_CTX, type TimelineContext } from "./timeline-ctx.js";
 
 interface Props {
@@ -47,13 +47,13 @@ setContext<TimelineContext>(TIMELINE_CTX, {
 	data-horizontal={horizontal || undefined}
 	data-size={size}
 	class={cn(
-		'timeline grid',
-		horizontal
-			? 'auto-cols-fr grid-flow-col grid-rows-[auto_0.75rem_1fr]'
-			: 'grid-cols-[auto_1fr]',
-		!horizontal && 'gap-x-4',
-		className
-	)}
+        "timeline grid",
+        horizontal
+            ? "auto-cols-fr grid-flow-col grid-rows-[auto_0.75rem_1fr]"
+            : "grid-cols-[auto_1fr]",
+        !horizontal && "gap-x-4",
+        className,
+    )}
 	{...rest}
 >
 	{@render children?.()}
