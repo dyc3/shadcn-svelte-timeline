@@ -106,11 +106,11 @@ const dotAlignSelf = $derived((): string => {
 	<!-- Connector line (rendered first so dot sits on top via z-index) -->
 	{#if timelineCtx?.horizontal}
 		<div
-			class="connector absolute top-1/2 left-1/2 right-[-50%] h-px -translate-y-1/2 bg-border"
+			class="connector absolute top-1/2 left-1/2 right-[-50%] h-px -translate-y-1/2 bg-border group-last/timeline-item:hidden"
 		></div>
 	{:else}
 		<div
-			class="connector absolute top-0 bottom-0 left-1/2 w-px -translate-x-1/2 bg-border"
+			class="connector absolute top-0 bottom-0 left-1/2 w-px -translate-x-1/2 bg-border group-last/timeline-item:hidden"
 		></div>
 	{/if}
 

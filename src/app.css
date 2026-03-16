@@ -91,29 +91,3 @@
 		@apply bg-background text-foreground;
 	}
 }
-
-@layer components {
-	/*
-	 * Vertical timeline: hide the connector line on the last item.
-	 *
-	 * Both vertical and horizontal TimelineItems now have the .timeline-item class.
-	 * Vertical: display:contents means the wrapper is invisible to layout but
-	 * still exists in the DOM, so :last-child works for CSS selectors.
-	 */
-	.timeline:not([data-horizontal]) > .timeline-item:last-child
-		> .timeline-ind-cell
-		> .connector {
-		display: none;
-	}
-
-	/*
-	 * Horizontal timeline: hide the last connector line.
-	 * Each TimelineItem is a real .timeline-item grid item. The last one's
-	 * indicator connector should be hidden.
-	 */
-	.timeline[data-horizontal] > .timeline-item:last-child
-		> .timeline-ind-cell
-		> .connector {
-		display: none;
-	}
-}

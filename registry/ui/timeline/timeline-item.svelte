@@ -39,13 +39,17 @@ setContext<TimelineItemContext>(TIMELINE_ITEM_CTX, {
 -->
 {#if timelineCtx?.horizontal}
 	<div
-		class="timeline-item grid [grid-row:span_3] [grid-template-rows:subgrid]"
+		class="timeline-item group/timeline-item grid [grid-row:span_3] [grid-template-rows:subgrid]"
 		{...rest}
 	>
 		{@render children?.()}
 	</div>
 {:else}
-	<div class="timeline-item" style="display: contents" {...rest}>
+	<div
+		class="timeline-item group/timeline-item"
+		style="display: contents"
+		{...rest}
+	>
 		{@render children?.()}
 	</div>
 {/if}
