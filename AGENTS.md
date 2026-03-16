@@ -13,6 +13,7 @@
 When you are done working on the task, the last thing to do to clean up is to run formatting and linting to ensure that your code is clean and consistent with the rest of the codebase. You can do this by running the following commands:
 
 ```sh
-bun run lint:fix
 bun run check
+bun run lint:fix
+bun run registry:build
 ```

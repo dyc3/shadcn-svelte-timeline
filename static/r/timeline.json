@@ -4,7 +4,9 @@
 	"title": "Timeline",
 	"type": "registry:ui",
 	"description": "A flexible timeline component with vertical/horizontal layouts, status indicators, and CSS grid alignment.",
-	"registryDependencies": ["utils"],
+	"registryDependencies": [
+		"utils"
+	],
 	"files": [
 		{
 			"content": "<script lang=\"ts\">\nimport type { Snippet } from \"svelte\";\nimport { setContext } from \"svelte\";\nimport { cn } from \"$UTILS$\";\nimport { TIMELINE_CTX, type TimelineContext } from \"./timeline-ctx.js\";\n\ninterface Props {\n\thorizontal?: boolean;\n\tsize?: \"default\" | \"lg\";\n\talign?: \"start\" | \"baseline\";\n\tchildren?: Snippet;\n\tclass?: string;\n\t[key: string]: unknown;\n}\n\nlet {\n\thorizontal = false,\n\tsize = \"default\",\n\talign = \"baseline\",\n\tchildren,\n\tclass: className,\n\t...rest\n}: Props = $props();\n\nsetContext<TimelineContext>(TIMELINE_CTX, {\n\tget horizontal() {\n\t\treturn horizontal;\n\t},\n\tget size() {\n\t\treturn size;\n\t},\n\tget align() {\n\t\treturn align;\n\t},\n});\n</script>\n\n<!--\n\tVertical: 2-column grid — col 1 (indicator, auto width) | col 2 (content, 1fr)\n\tTimelineItems use display:contents so their children land directly in this grid.\n\n\tHorizontal: auto-fill equal columns, 2 rows [auto_1fr].\n\tEach TimelineItem is a real grid item spanning 2 rows via subgrid,\n\tstacking its indicator (row 1) and content (row 2).\n-->\n<div\n\tdata-horizontal={horizontal || undefined}\n\tdata-size={size}\n\tclass={cn(\n\t\t'timeline grid',\n\t\thorizontal\n\t\t\t? 'auto-cols-fr grid-flow-col grid-rows-[auto_0.75rem_1fr]'\n\t\t\t: 'grid-cols-[auto_1fr]',\n\t\t!horizontal && 'gap-x-4',\n\t\tclassName\n\t)}\n\t{...rest}\n>\n\t{@render children?.()}\n</div>\n",
