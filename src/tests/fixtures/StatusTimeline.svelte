@@ -1,8 +1,8 @@
 <script lang="ts">
-    import Timeline from "../../../registry/ui/timeline/timeline.svelte";
-    import TimelineContent from "../../../registry/ui/timeline/timeline-content.svelte";
-    import TimelineIndicator from "../../../registry/ui/timeline/timeline-indicator.svelte";
-    import TimelineItem from "../../../registry/ui/timeline/timeline-item.svelte";
+    import Timeline from "$lib/registry/ui/timeline/timeline.svelte";
+    import TimelineContent from "$lib/registry/ui/timeline/timeline-content.svelte";
+    import TimelineIndicator from "$lib/registry/ui/timeline/timeline-indicator.svelte";
+    import TimelineItem from "$lib/registry/ui/timeline/timeline-item.svelte";
 </script>
 
 <Timeline>

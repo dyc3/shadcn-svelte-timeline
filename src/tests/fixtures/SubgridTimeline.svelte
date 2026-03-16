@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Timeline from "../../../registry/ui/timeline/timeline.svelte";
-    import TimelineBlock from "../../../registry/ui/timeline/timeline-block.svelte";
-    import TimelineSubgrid from "../../../registry/ui/timeline/timeline-subgrid.svelte";
+    import Timeline from "$lib/registry/ui/timeline/timeline.svelte";
+    import TimelineBlock from "$lib/registry/ui/timeline/timeline-block.svelte";
+    import TimelineSubgrid from "$lib/registry/ui/timeline/timeline-subgrid.svelte";
 </script>
 
 <!--
