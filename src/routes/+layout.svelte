@@ -2,7 +2,7 @@
 import "../app.css";
 
 let { children } = $props();
-let dark = $state(false);
+let dark = $state(true);
 
 $effect(() => {
 	document.documentElement.classList.toggle("dark", dark);

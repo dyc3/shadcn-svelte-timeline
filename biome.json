@@ -6,7 +6,13 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"includes": ["**", "!node_modules/", "!!**/.svelte-kit", "!!**/build"]
+		"includes": [
+			"**",
+			"!node_modules/",
+			"!!**/.svelte-kit",
+			"!!**/build",
+			"!!static"
+		]
 	},
 	"formatter": {
 		"enabled": true
