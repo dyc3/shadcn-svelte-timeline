@@ -9,19 +9,9 @@ import {
 	type TimelineItemContext,
 } from "./timeline-ctx.js";
 
-type Color =
-	| "default"
-	| "green"
-	| "red"
-	| "amber"
-	| "blue"
-	| "purple"
-	| "cyan"
-	| "pink";
 type Variant = "default" | "bare";
 
 interface Props {
-	color?: Color;
 	variant?: Variant;
 	children?: Snippet;
 	class?: string;
@@ -29,7 +19,6 @@ interface Props {
 }
 
 let {
-	color = "default",
 	variant = "default",
 	children,
 	class: className,
@@ -39,17 +28,6 @@ let {
 const timelineCtx = getContext<TimelineContext>(TIMELINE_CTX);
 const itemCtx = getContext<TimelineItemContext>(TIMELINE_ITEM_CTX);
 
-const colorClasses: Record<Color, string> = {
-	default: "bg-zinc-300 dark:bg-zinc-600",
-	green: "bg-green-500",
-	red: "bg-red-500",
-	amber: "bg-amber-500",
-	blue: "bg-blue-500",
-	purple: "bg-purple-500",
-	cyan: "bg-cyan-500",
-	pink: "bg-pink-500",
-};
-
 const statusClasses: Record<string, string> = {
 	complete: "bg-primary",
 	current:
@@ -57,12 +35,12 @@ const statusClasses: Record<string, string> = {
 	incomplete: "bg-muted-foreground/30",
 };
 
-const dotClass = $derived(
-	variant === "bare"
+const defaultDotClass = "bg-zinc-300 dark:bg-zinc-600";
+
+const statusClass = $derived(
+	variant === "bare" || !itemCtx?.status
 		? ""
-		: itemCtx?.status
-			? (statusClasses[itemCtx.status] ?? colorClasses[color])
-			: colorClasses[color],
+		: (statusClasses[itemCtx.status] ?? ""),
 );
 
 const sizeClass = $derived(
@@ -98,8 +76,7 @@ const dotAlignSelf = $derived((): string => {
 		'timeline-ind-cell relative',
 		timelineCtx?.horizontal
 			? 'flex items-center justify-center'
-			: 'grid justify-items-center',
-		className
+			: 'grid justify-items-center'
 	)}
 	{...rest}
 >
@@ -119,7 +96,9 @@ const dotAlignSelf = $derived((): string => {
 		class={cn(
 			'relative z-10 flex shrink-0 items-center justify-center rounded-full',
 			sizeClass,
-			dotClass,
+			variant !== "bare" && defaultDotClass,
+			className,
+			statusClass,
 			!timelineCtx?.horizontal && dotAlignSelf()
 		)}
 	>

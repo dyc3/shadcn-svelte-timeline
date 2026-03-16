@@ -7,7 +7,7 @@ import TimelineItem from "$lib/registry/ui/timeline/timeline-item.svelte";
 
 <Timeline>
 	<TimelineItem status="complete" data-status="complete">
-		<TimelineIndicator />
+		<TimelineIndicator class="bg-red-500" />
 		<TimelineContent>Completed step</TimelineContent>
 	</TimelineItem>
 	<TimelineItem status="current" data-status="current">

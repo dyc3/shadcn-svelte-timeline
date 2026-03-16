@@ -54,7 +54,7 @@ export const timelineExamples: TimelineExample[] = [
 	{
 		id: "indicator-colors",
 		title: "Indicator colors",
-		description: "Use `color` on the indicator to set a colored background.",
+		description: "Use indicator classes to set a custom colored background.",
 		component: IndicatorColors,
 		source: extractExampleMarkup(exampleSources["indicator-colors.svelte"]),
 	},

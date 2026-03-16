@@ -85,7 +85,7 @@ import * as Timeline from "$lib/registry/ui/timeline/index.js";
 		</Timeline.Content>
 	</Timeline.Item>
 	<Timeline.Item>
-		<Timeline.Indicator color="green">
+		<Timeline.Indicator class="bg-green-500">
 			<svg
 				class="size-3 text-white"
 				viewBox="0 0 16 16"

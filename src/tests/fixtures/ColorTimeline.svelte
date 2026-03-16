@@ -7,19 +7,19 @@ import TimelineItem from "$lib/registry/ui/timeline/timeline-item.svelte";
 
 <Timeline>
 	<TimelineItem>
-		<TimelineIndicator color="green" />
+		<TimelineIndicator class="bg-green-500" />
 		<TimelineContent>Green</TimelineContent>
 	</TimelineItem>
 	<TimelineItem>
-		<TimelineIndicator color="red" />
+		<TimelineIndicator class="bg-red-500" />
 		<TimelineContent>Red</TimelineContent>
 	</TimelineItem>
 	<TimelineItem>
-		<TimelineIndicator color="amber" />
+		<TimelineIndicator class="bg-amber-500" />
 		<TimelineContent>Amber</TimelineContent>
 	</TimelineItem>
 	<TimelineItem>
-		<TimelineIndicator color="blue" />
+		<TimelineIndicator class="bg-blue-500" />
 		<TimelineContent>Blue</TimelineContent>
 	</TimelineItem>
 </Timeline>

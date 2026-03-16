@@ -4,7 +4,7 @@ import * as Timeline from "$lib/registry/ui/timeline/index.js";
 
 <Timeline.Root>
 	<Timeline.Item>
-		<Timeline.Indicator color="red">
+		<Timeline.Indicator class="bg-red-500">
 			<svg
 				class="size-3 text-white"
 				viewBox="0 0 16 16"
@@ -22,7 +22,7 @@ import * as Timeline from "$lib/registry/ui/timeline/index.js";
 		</Timeline.Content>
 	</Timeline.Item>
 	<Timeline.Item>
-		<Timeline.Indicator color="amber">
+		<Timeline.Indicator class="bg-amber-500">
 			<svg class="size-3 text-white" viewBox="0 0 16 16" fill="currentColor">
 				<path
 					d="M8 2l1.5 4.5H14l-3.5 2.5 1.5 4.5L8 11l-4 2.5 1.5-4.5L2 6.5h4.5L8 2z"
@@ -35,7 +35,7 @@ import * as Timeline from "$lib/registry/ui/timeline/index.js";
 		</Timeline.Content>
 	</Timeline.Item>
 	<Timeline.Item>
-		<Timeline.Indicator color="green">
+		<Timeline.Indicator class="bg-green-500">
 			<svg
 				class="size-3 text-white"
 				viewBox="0 0 16 16"

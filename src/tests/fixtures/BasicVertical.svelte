@@ -15,7 +15,7 @@ import TimelineItem from "$lib/registry/ui/timeline/timeline-item.svelte";
 		<TimelineContent>Item 2</TimelineContent>
 	</TimelineItem>
 	<TimelineItem>
-		<TimelineIndicator color="green" />
+		<TimelineIndicator class="bg-green-500" />
 		<TimelineContent>Item 3</TimelineContent>
 	</TimelineItem>
 </Timeline>

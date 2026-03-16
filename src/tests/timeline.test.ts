@@ -67,6 +67,16 @@ function csAll(selector: string, prop: string): string[] {
 }
 
 describe("Basic vertical timeline", () => {
+	test("default indicator dot keeps the neutral zinc background", async () => {
+		render(BasicVertical);
+
+		await expect.element(page.getByText("Item 1")).toBeInTheDocument();
+		const dot = document.querySelector(
+			".timeline-ind-cell .rounded-full",
+		) as HTMLElement;
+		expect(dot.classList.contains("bg-zinc-300")).toBe(true);
+	});
+
 	test("renders as a 2-column grid", async () => {
 		render(BasicVertical);
 
@@ -202,6 +212,7 @@ describe("Status timeline", () => {
 		) as HTMLElement;
 		expect(dot).not.toBeNull();
 		expect(dot.classList.contains("bg-primary")).toBe(true);
+		expect(dot.classList.contains("bg-red-500")).toBe(false);
 	});
 
 	test("current item indicator has ring-2 class", async () => {
@@ -228,7 +239,7 @@ describe("Status timeline", () => {
 });
 
 describe("Indicator colors", () => {
-	test("color=green dot has bg-green-500 class", async () => {
+	test("custom green class reaches the indicator dot", async () => {
 		render(ColorTimeline);
 
 		await expect.element(page.getByText("Green")).toBeInTheDocument();
@@ -238,7 +249,7 @@ describe("Indicator colors", () => {
 		expect(dots.some((d) => d.classList.contains("bg-green-500"))).toBe(true);
 	});
 
-	test("color=red dot has bg-red-500 class", async () => {
+	test("custom red class reaches the indicator dot", async () => {
 		render(ColorTimeline);
 
 		await expect.element(page.getByText("Red")).toBeInTheDocument();
@@ -248,7 +259,7 @@ describe("Indicator colors", () => {
 		expect(dots.some((d) => d.classList.contains("bg-red-500"))).toBe(true);
 	});
 
-	test("color=amber dot has bg-amber-500 class", async () => {
+	test("custom amber class reaches the indicator dot", async () => {
 		render(ColorTimeline);
 
 		await expect.element(page.getByText("Amber")).toBeInTheDocument();
