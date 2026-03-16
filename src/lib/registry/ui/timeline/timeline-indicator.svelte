@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { Snippet } from "svelte";
 import { getContext } from "svelte";
+import { tv } from "tailwind-variants";
 import { cn } from "$lib/utils";
 import {
 	TIMELINE_CTX,
@@ -28,6 +29,45 @@ let {
 const timelineCtx = getContext<TimelineContext>(TIMELINE_CTX);
 const itemCtx = getContext<TimelineItemContext>(TIMELINE_ITEM_CTX);
 
+const indicatorVariants = tv({
+	slots: {
+		root: "timeline-ind-cell relative",
+		dot: "relative z-10 flex shrink-0 items-center justify-center rounded-full",
+	},
+	variants: {
+		horizontal: {
+			true: {
+				root: "flex items-center justify-center",
+			},
+			false: {
+				root: "grid justify-items-center",
+			},
+		},
+		size: {
+			default: {
+				dot: "size-2.5",
+			},
+			icon: {
+				dot: "size-5",
+			},
+			lg: {
+				dot: "size-8 text-sm font-medium",
+			},
+		},
+		variant: {
+			default: {
+				dot: "bg-zinc-300 dark:bg-zinc-600",
+			},
+			bare: {},
+		},
+	},
+	defaultVariants: {
+		horizontal: false,
+		size: "default",
+		variant: "default",
+	},
+});
+
 const statusClasses: Record<string, string> = {
 	complete: "bg-primary",
 	current:
@@ -35,22 +75,28 @@ const statusClasses: Record<string, string> = {
 	incomplete: "bg-muted-foreground/30",
 };
 
-const defaultDotClass = "bg-zinc-300 dark:bg-zinc-600";
-
 const statusClass = $derived(
 	variant === "bare" || !itemCtx?.status
 		? ""
 		: (statusClasses[itemCtx.status] ?? ""),
 );
 
-const sizeClass = $derived(
+const size = $derived(
 	variant === "bare"
-		? ""
+		? undefined
 		: timelineCtx?.size === "lg"
-			? "size-8 text-sm font-medium"
+			? "lg"
 			: children
-				? "size-5"
-				: "size-2.5",
+				? "icon"
+				: "default",
+);
+
+const slots = $derived(
+	indicatorVariants({
+		horizontal: Boolean(timelineCtx?.horizontal),
+		size,
+		variant,
+	}),
 );
 
 // Vertical alignment: align-self on the dot inside the ind-cell grid.
@@ -71,15 +117,7 @@ const dotAlignSelf = $derived((): string => {
 
 	Horizontal: position:relative flex, dot centered, connector absolute.
 -->
-<div
-	class={cn(
-		'timeline-ind-cell relative',
-		timelineCtx?.horizontal
-			? 'flex items-center justify-center'
-			: 'grid justify-items-center'
-	)}
-	{...rest}
->
+<div class={slots.root()} {...rest}>
 	<!-- Connector line (rendered first so dot sits on top via z-index) -->
 	{#if timelineCtx?.horizontal}
 		<div
@@ -94,9 +132,7 @@ const dotAlignSelf = $derived((): string => {
 	<!-- The indicator dot/icon -->
 	<div
 		class={cn(
-			'relative z-10 flex shrink-0 items-center justify-center rounded-full',
-			sizeClass,
-			variant !== "bare" && defaultDotClass,
+			slots.dot(),
 			className,
 			statusClass,
 			!timelineCtx?.horizontal && dotAlignSelf()
