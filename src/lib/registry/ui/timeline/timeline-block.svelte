@@ -20,10 +20,9 @@ let { children, class: className, ...rest }: Props = $props();
 -->
 <div
 	class={cn(
-		'timeline-block col-span-full grid auto-rows-auto after:col-span-full after:block after:h-6 after:content-[""]',
-		'[grid-template-columns:subgrid]',
-		className
-	)}
+        'timeline-block col-span-full grid auto-rows-auto after:col-span-full after:block after:h-6 after:content-[""] grid-cols-subgrid',
+        className,
+    )}
 	{...rest}
 >
 	{@render children?.()}
