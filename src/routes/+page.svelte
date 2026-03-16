@@ -1,10 +1,10 @@
 <script lang="ts">
-import Timeline from "../../registry/timeline/timeline.svelte";
-import TimelineBlock from "../../registry/timeline/timeline-block.svelte";
-import TimelineContent from "../../registry/timeline/timeline-content.svelte";
-import TimelineIndicator from "../../registry/timeline/timeline-indicator.svelte";
-import TimelineItem from "../../registry/timeline/timeline-item.svelte";
-import TimelineSubgrid from "../../registry/timeline/timeline-subgrid.svelte";
+import Timeline from "../../registry/ui/timeline/timeline.svelte";
+import TimelineBlock from "../../registry/ui/timeline/timeline-block.svelte";
+import TimelineContent from "../../registry/ui/timeline/timeline-content.svelte";
+import TimelineIndicator from "../../registry/ui/timeline/timeline-indicator.svelte";
+import TimelineItem from "../../registry/ui/timeline/timeline-item.svelte";
+import TimelineSubgrid from "../../registry/ui/timeline/timeline-subgrid.svelte";
 </script>
 
 <div class="mx-auto max-w-4xl space-y-16 px-6 py-12">
@@ -669,21 +669,24 @@ import TimelineSubgrid from "../../registry/timeline/timeline-subgrid.svelte";
 			<code class="rounded bg-muted px-1 py-0.5 text-xs font-mono">start</code>.
 		</p>
 		<div class="grid grid-cols-2 gap-4">
-			{#each ['start', 'baseline'] as alignVal}
+			{#each ["start", "baseline"] as alignVal}
 				<div class="rounded-lg border p-4">
 					<p
 						class="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground"
 					>
 						{alignVal}
 					</p>
-					<Timeline size="lg" align={alignVal as 'start' | 'baseline'}>
+					<Timeline size="lg" align={alignVal as "start" | "baseline"}>
 						<TimelineItem>
 							<TimelineIndicator
-								>{alignVal === 'start' ? '1' : '2'}</TimelineIndicator
+								>{alignVal === "start"
+                                    ? "1"
+                                    : "2"}</TimelineIndicator
 							>
 							<TimelineContent>
 								<p class="text-sm font-semibold">
-									{alignVal.charAt(0).toUpperCase() + alignVal.slice(1)}
+									{alignVal.charAt(0).toUpperCase() +
+                                        alignVal.slice(1)}
 									align
 								</p>
 								<p class="text-sm text-muted-foreground">
@@ -693,7 +696,9 @@ import TimelineSubgrid from "../../registry/timeline/timeline-subgrid.svelte";
 						</TimelineItem>
 						<TimelineItem>
 							<TimelineIndicator
-								>{alignVal === 'start' ? '2' : '3'}</TimelineIndicator
+								>{alignVal === "start"
+                                    ? "2"
+                                    : "3"}</TimelineIndicator
 							>
 							<TimelineContent>
 								<p class="text-sm font-semibold">Second item</p>
