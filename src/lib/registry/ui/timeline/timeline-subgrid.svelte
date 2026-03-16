@@ -20,8 +20,7 @@ let { children, class: className, ...rest }: Props = $props();
 -->
 <div
 	class={cn(
-        "timeline-subgrid col-span-full grid items-start gap-3",
-        "[grid-template-columns:subgrid]",
+        "timeline-subgrid col-span-full grid items-start gap-3 grid-cols-subgrid",
         className,
     )}
 	{...rest}

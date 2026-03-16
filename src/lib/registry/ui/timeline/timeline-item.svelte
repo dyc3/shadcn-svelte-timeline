@@ -39,7 +39,7 @@ setContext<TimelineItemContext>(TIMELINE_ITEM_CTX, {
 -->
 {#if timelineCtx?.horizontal}
 	<div
-		class="timeline-item group/timeline-item grid [grid-row:span_3] [grid-template-rows:subgrid]"
+		class="timeline-item group/timeline-item grid grid-cols-subgrid row-[span_3]"
 		{...rest}
 	>
 		{@render children?.()}
