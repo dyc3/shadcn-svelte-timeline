@@ -1,6 +1,12 @@
-# sv
+# shadcn-svelte timeline
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Add the timeline component with:
+
+```sh
+npx shadcn-svelte@latest add https://shadcn-svelte-timeline.vercel.app/r/timeline.json
+```
+
+This project contains the demo site and registry source for the timeline component.
 
 ## Creating a project
 
